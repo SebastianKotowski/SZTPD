@@ -1,0 +1,333 @@
+﻿@model SZPD.Models.Thesis
+
+@{
+    ViewBag.Title = "Edytuj temat";
+}
+
+<h2>Edycja tematu</h2>
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="form-group">
+                @Html.Label("Temat", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", @style= "background-color:rgba(34, 139, 34, 0.60); color:white" } })
+                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Angielski temat", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EnglishSubject, new { htmlAttributes = new { @class = "form-control", @style = "background-color:rgba(34, 139, 34, 0.60); fill-opacity: 50; color:white" } })
+                    @Html.ValidationMessageFor(model => model.EnglishSubject, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Cel pracy", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Objective, new { @class = "form-control", @style = "background-color:rgba(34, 139, 34, 0.60); color:white; height: 100px" })
+                    @Html.ValidationMessageFor(model => model.Objective, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Zadania", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Tasks, new { @class = "form-control", @style = "background-color:rgba(34, 139, 34, 0.60); color:white; height: 100px" })
+                    @Html.ValidationMessageFor(model => model.Tasks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Komentarz", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Comment, new { @class = "form-control", @style = "background-color:rgba(34, 139, 34, 0.60); color:white; height: 100px" })
+                    @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Prywatny komentarz", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.PrivateComment, new { @class = "form-control", @style = "height: 100px" })
+                    @Html.ValidationMessageFor(model => model.PrivateComment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Status, new SelectList(new List<string>() { "Wolna", "Zarezerwowana", "Zajęta" }), new { @class = "form-control", @style = "background-color:rgba(34, 139, 34, 0.60); color:white" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Wersja", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Version, new SelectList(new List<string>() { "Prywatny", "Publiczny" }), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Version, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Kategoria", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Category, new SelectList(new List<string>() { "Inżynierskie stacjonarne", "Inżynierskie niestacjonarne", "Magisterskie stacjonarne", "Magisterskie niestacjonarne" }), new { @class = "form-control", @style = "background-color:rgba(34, 139, 34, 0.60); color:white;" })
+                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Student, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Student, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Student, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Data oddania pracy", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CompletionDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CompletionDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Data obrony", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DefenseDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DefenseDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Komisja - przewodniczący", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ChairmanCommittee, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ChairmanCommittee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Komisja - recenzent", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ReviewerCommittee, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ReviewerCommittee, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Ocena", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Rate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Rate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Wydział", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("FacultyId", (IEnumerable<SelectListItem>)ViewBag.Faculties, string.Empty, new { @class = "form-control", @key = Model.FacultyId })
+                </div>
+            </div>
+            <div id="coursespecs">
+                <div class="form-group">
+                    @Html.Label("Kierunek", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select id="Kierunek" name="Kierunek" class="form-control" v-on:change="test($('#Kierunek').val())">
+                            <option v-for="course in courses" v-bind:value="course.Id">{{course.Name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Specjalizacja", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select id="Specjalizacja" name="Specjalizacja" v-on:change="test" class="form-control">
+                            <option v-for="specialization in specializations" v-bind:value="specialization.Id">{{specialization.Name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Dane wejściowe", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.InputData, new { @class = "form-control", @style = "height: 100px" })
+                    @Html.ValidationMessageFor(model => model.InputData, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Zakres pracy", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.ThesisRange, new { @class = "form-control", @style = "height: 100px" })
+                    @Html.ValidationMessageFor(model => model.ThesisRange, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Miejsce prowadzenia prac", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ThesisLocation, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ThesisLocation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Zakład", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("InstituteId", (IEnumerable<SelectListItem>)ViewBag.Institutes, string.Empty, new { @class = "form-control", @key = Model.InstituteId })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Profil kształcenia", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EducationProfile, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EducationProfile, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Rozliczona", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.Settled, new { @class = "tex" })
+                    @Html.ValidationMessageFor(model => model.Settled, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            @Html.HiddenFor(model => model.LecturerID)
+            @Html.HiddenFor(model => model.AcademicYearID)
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Zapisz" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div>
+    @Html.ActionLink("Powrót", "Details", "AcademicYear")
+</div>
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jquery");
+    @Scripts.Render("~/bundles/jqueryvalidate");
+    @Scripts.Render("~/bundles/vue");
+    @Scripts.Render("~/bundles/vue_min");
+
+    <script type="text/javascript">
+        var Tcourses = [];
+        var specializations = [];
+
+            function refreshCourses(id) {
+                $.ajax({
+                    url: "@Url.Action("UpdateCourses", "Thesis")/" + id,
+                    success: function (data) {
+                        var attributes = JSON.parse(data);
+                        Tcourses = []
+                        fcsVue.courses = []
+                        for (i = 0; i < attributes.length; i++)
+                        {
+                            attributes[i].Id = parseInt(attributes[i].Id);
+                            fcsVue.addCourses(attributes[i]);
+                        }
+                        
+                        attributes = null;
+                    },
+                    error: function (request, status, error) {
+                        
+                    },
+                    complete: function () {
+
+
+                    }
+                });
+            }
+
+        function refreshSpecializations(id) {
+                $.ajax({
+                    url: "@Url.Action("UpdateSpecializations", "Thesis")/" + id,
+                    success: function (data) {
+                        var attributes = JSON.parse(data);
+                        this.specializations = []
+                        fcsVue.specializations = []
+                        for (i = 0; i < attributes.length; i++)
+                        {
+                            fcsVue.addSpecializations(attributes[i]);
+                        }
+                        
+                        attributes = null;
+                    },
+                    error: function (request, status, error) {
+
+                    },
+                    complete: function () {
+
+                    }
+                });
+        }
+          
+        $(function () {
+            fcsVue = new Vue({
+                    el: '#coursespecs',
+                    data: {
+                        courses: Tcourses,
+                        specializations: specializations,
+                    },
+                    ready: function () {
+
+                        @Html.Raw("this.courses = " + ViewBag.Courses + ";");
+                        @Html.Raw("this.specializations = " + ViewBag.Specializations + ";");
+
+                        for (i = 0; i < this.courses.length; i++) {
+                            Tcourses.push(courses[i]);
+                        }
+
+                        for (i = 0; i < this.specializations.length; i++) {
+                            specializations.push(this.specializations[i]);
+                        }
+                    },
+                    methods: {
+                        addCourses: function (data) {
+                            Tcourses.push(data);
+                            this.courses.push(data);
+                        },
+                        addSpecializations: function (data) {
+                            this.specializations.push(data);
+                        },
+                        test: function (index) {
+                            console.log('Specialization from vue');
+                            refreshSpecializations(index);
+                        }
+                    }
+            });
+
+            $faculty.change(function () {
+                refreshCourses($faculty.val());
+                fcsVue.test($('#Kierunek').val());
+            });
+            
+        });
+
+        var $faculty = $('#Faculty');        
+        var $course = $('#Kierunek').val()
+
+    </script>
+}

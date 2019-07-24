@@ -1,0 +1,53 @@
+﻿@model SZPD.Models.Lecturer
+
+<h3>Czy napewno chcesz usunąć użytkownika @Model.FirstName @Model.Lastname?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Imię")
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+    
+        <dt>
+            @Html.DisplayName("Nazwisko")
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>   
+        <dt>
+            @Html.DisplayName("Data Aktywacji")
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.JoinDate)
+        </dd>
+        <dt>
+            @Html.DisplayName("Email")
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>          
+        <dd>
+            @Html.DisplayName("Aktywowane")
+        </dd>   
+        <dd>
+            @Html.DisplayFor(model => model.EmailConfirmed)
+        </dd>       
+    </dl>
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+    
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-danger" /> |
+            @Html.ActionLink("Powrót do listy", "Index")
+        </div>
+    }
+</div>
+

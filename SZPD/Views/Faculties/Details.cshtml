@@ -1,0 +1,48 @@
+﻿@model SZPD.Models.FacultyCoursesViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <h2>@Model.Faculty.Name</h2>
+    <hr />
+</div>
+
+<div class="dataTable_wrapper">
+    <h3>Kierunki:</h3>
+    <br />
+    <table class="table table-striped table-bordered table-hover" id="definitionsDataTable">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Courses)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(c.Name, "Details", "Courses", new { ID = c.Id }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Usuń", "Delete", "Courses", new { id = c.Id }, null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>
+@Html.ActionLink("Dodaj Nowy", "Create", "Courses", new { id = Model.Faculty.Id }, new { @class = "btn btn-primary" })
+<br />
+<br />
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.Faculty.Id }) |
+    @Html.ActionLink("Powrót", "Index")
+</p>

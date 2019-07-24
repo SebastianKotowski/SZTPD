@@ -1,0 +1,9 @@
+﻿@model SZPD.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+
+@using (Html.BeginForm("GenerateUrlAuth", "Account"))
+{
+    <input type="text" name="email" />
+    <input type="submit" value="Wyślij"/>
+}

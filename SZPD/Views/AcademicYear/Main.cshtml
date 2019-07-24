@@ -1,0 +1,91 @@
+﻿@model SZPD.Models.AcademicYear
+
+@{
+    ViewBag.Title = "Panel zarządzający";
+}
+
+<h2>Rok akademicki @Model.Year</h2>
+<h3>Status: @Model.Status</h3>
+<br />
+<br />
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (Model.Status == "Nowy")
+    {
+        <p>
+            Proces dodawania tematów nie został jeszcze rozpoczęty.
+        </p>
+    }
+
+    if (Model.Status == "Zgłaszanie prac otwarte")
+    {
+        <p>
+            Obecnie trwa proces dodawania tematów przez promotorów.
+        </p>
+    }
+
+    if (Model.Status == "Zgłaszanie prac zakończone")
+    {
+        <p>
+            Proces dodawania tematów został zakończony.
+        </p>
+    }
+
+    if (Model.Status == "Zamkniety")
+    {
+        <p>
+            Rok akademicki został zamknięty. Zapraszay ponownie w następnym okresie.
+        </p>
+    }
+
+    using (Html.BeginForm("Details", "AcademicYear", FormMethod.Get))
+    {
+        <input type="hidden" value="true" id="own" name="own" />      
+        <input type="submit" value="Przejdź do tematów" />
+    }
+}
+else
+{
+    if (Model.Status == "Nowy")
+    {
+        <p>
+            Proces dodawania tematów nie został jeszcze rozpoczęty. Przeglądanie tematów mozliwe będzie przy statusie "Zgłaszanie prac zakończone".
+        </p>
+    }
+
+    if (Model.Status == "Zgłaszanie prac otwarte")
+    {
+        <p>
+            Obecnie trwa proces dodawania tematów przez promotorów. Przeglądanie tematów możliwe będzie przy statusie "Zgłaszanie prac zakończone".
+        </p>
+    }
+
+    if (Model.Status == "Zgłaszanie prac zakończone")
+    {
+        <p>
+            Proces dodawania tematów został zakończony. zapraszamy do zapoznania się z listą dostąpnych tematów.
+        </p>
+        <br />
+        using (Html.BeginForm("Details", "AcademicYear", FormMethod.Get))
+        {
+            <div class="form-group">
+                @Html.Label("Wybierz tryb studiów", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("tryb", new SelectList(new List<string>() { "Wszystkie", "Inżynierskie stacjonarne", "Inżynierskie niestacjonarne", "Magisterskie stacjonarne", "Magisterskie niestacjonarne" }), new { @class = "form-control", @style = "width:25%" })
+                </div>
+                <input type="submit" value="Przejdź do tematów" />
+            </div>
+
+
+        }
+        <br />
+    }
+
+    if (Model.Status == "Zamkniety")
+    {
+        <p>
+            Rok akademicki został zamknięty. Zapraszay ponownie w następnym okresie.
+        </p>
+    }
+}

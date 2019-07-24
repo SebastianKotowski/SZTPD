@@ -1,0 +1,60 @@
+﻿@model SZPD.Models.RequestMessage
+@{
+    ViewBag.Title = "SendRequest";
+}
+
+<h2>Zapytanie o podjęcie tematu</h2>
+
+@using (Html.BeginForm("SendRequest", "Thesis", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-6">
+                <label>Imię i Nazwisko *</label>
+                @Html.EditorFor(model => model.Sender, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-6">
+                <label>Adres e-mail *</label>
+                @Html.EditorFor(model => model.SenderEmail, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Temat *</label>
+                                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label>Wiadomość *</label>
+                                @Html.TextAreaFor(model => model.Content, new { rows = 10, @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <!--<span class="pull-right">
+                                 captcha
+                                <label class="block text-right fsize12">Antispam Code</label>
+                                <img alt="" rel="nofollow,noindex" width="50" height="18" src="php/captcha.php?bgcolor=ffffff&amp;txtcolor=000000">
+                                <input type="text" name="contact_captcha" id="contact_captcha" value="" data-msg-required="Please enter the subject." maxlength="6" style="width:100px; margin-left:10px;">
+                            </span>-->
+
+                            <input type="submit" value="Wyślij zapytanie" class="btn btn-primary btn-lg" data-loading-text="Wysyłanie...">
+                        </div>
+                    </div>
+}
+
+<br />
+
+<div>
+    @Html.ActionLink("Powrót", "Details", "AcademicYear")
+</div>
+

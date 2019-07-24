@@ -1,0 +1,106 @@
+﻿@using SZPD.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Logowanie";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>Użyj istniejące konto w celu zalogowania</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @id = "EmailF", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Hasło", new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Zaloguj" class="btn btn-default" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Zarejestruj nowego użytkownika", "Register")
+                    </div>
+                </div>
+                @* Enable this once you have account confirmation enabled for password reset functionality
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>*@
+            }
+
+            <br />
+            <br />
+
+            <h4>Wyślij na zarejestrowane konto link logowania</h4>
+            <hr />
+            @using (Html.BeginForm("GenerateUrlAuth", "Account", FormMethod.Get, new { @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    @Html.Label("Email", new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        <input type="text" name="email" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Wyślij" class="btn btn-success" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/vue")
+
+    <script type="text/javascript">
+        var $email = $('#EmailF');
+
+        new Vue({
+            el: '#generateLink',
+            data: {
+                email: email,
+            },
+            methods: {
+                generateLink: function () {
+                    $.ajax({
+                        url: "@Url.Action("GenerateUrlAuth", "Account")/" + $email.val(),
+                        success: function (data) {
+                            showNotification("Wysłano link do logowania", "danger");
+                        },
+                    error: function (request, status, error) {
+                        showNotification(defaultErrorMsg, "danger");
+                    },
+                    complete: function () {
+
+                    }
+                });
+        },      
+        }
+        });
+    </script>
+}

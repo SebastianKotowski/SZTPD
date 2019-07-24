@@ -1,0 +1,59 @@
+﻿@model SZPD.Models.CourseSpecializationsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <h3>Szczegóły kierunku @Model.Course.Name</h3>
+    <hr />    
+</div>
+
+<div class="dataTable_wrapper">
+    <h3>Specjalizacje:</h3>
+    <br />
+    <table class="table table-striped table-bordered table-hover" id="definitionsDataTable">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa specjalizacji
+                </th>
+                <th>
+                    Stacjonarne
+                </th>
+                <th>
+                    Niestacjonarne
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.Specializations)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(c.Name, "Edit", "Specializations", new { ID = c.Id }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => c.Stationary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => c.Extramural)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Usuń", "Delete", "Specializations", new { id = c.Id }, null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@Html.ActionLink("Dodaj nową", "Create", "Specializations", new { id = @Model.Course.Id }, new { @class = "btn btn-primary" })
+<br />
+<br />
+<p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = @Model.Course.Id }) |
+    @Html.ActionLink("Powrót", "Details", "Faculties", new { id = Model.Course.FacultyId }, null)
+</p>

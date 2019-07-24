@@ -1,0 +1,134 @@
+﻿@model SZPD.Models.ThesisInYear
+@using PagedList.Mvc;
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    
+    @if (User.Identity.IsAuthenticated)
+    {
+        using (Html.BeginForm("ThesisReport", "AcademicYear", FormMethod.Get))
+        {
+            <div style="margin-top:6px; margin-left:80%">
+                <input type="hidden" id="academicYear" name="academicYear" value=@Model.AcademicYear.ID />
+                <p class="inputSt">
+                    Zakład @Html.DropDownList("instituteId", (IEnumerable<SelectListItem>)ViewBag.Institutes, string.Empty, new { @class = "form-control" })
+                    <input type="submit" value="Generuj Raport" />
+                </p>
+            </div>
+        }
+    }
+    
+    <h2>Rok akademicki @Html.DisplayFor(model => model.AcademicYear.Year)</h2>
+    @if (User.Identity.IsAuthenticated)
+    {
+        using (Html.BeginForm("Details", "AcademicYear", FormMethod.Get))
+        {
+            @Html.DropDownList("AcademicYears")
+            <input type="submit" value="Wybierz" />
+        }
+    }
+    <h4>@Html.DisplayNameFor(model => model.AcademicYear.Status): @Html.DisplayFor(model => model.AcademicYear.Status)</h4>
+</div>
+
+<br />
+<br />
+
+@using (Html.BeginForm("Details", "AcademicYear", FormMethod.Get))
+{
+    <p class="inputSt">
+        @if(!User.Identity.IsAuthenticated)
+        {
+            <div style="float:right;">Tryb studiów: @Html.DropDownList("tryb", new SelectList(new List<string>() {"Wszystkie", "Inżynierskie stacjonarne", "Inżynierskie niestacjonarne", "Magisterskie stacjonarne", "Magisterskie niestacjonarne" }), new { @class = "form-control" }) </div>            
+        }
+        else
+        {
+            <div style="float:right;">Tryb studiów: @Html.DropDownList("tryb", new SelectList(new List<string>() { "Wszystkie", "Inżynierskie stacjonarne", "Inżynierskie niestacjonarne", "Magisterskie stacjonarne", "Magisterskie niestacjonarne" }), new { @class = "form-control" }) </div>
+            <div style="float:right;">____<p>@Html.CheckBox("own", true)</p></div>
+        }               
+        <div style="float:right; margin-right:10px;">Promotor: @Html.Editor("promotor", new { htmlAttributes = new { @class = "form-control" } })</div>
+        <br />
+        <input type="submit" value="Filtruj" style="float:right; margin-right:10px; margin-bottom:30px;"/>
+    </p>
+}
+
+<div>
+    <table class="table">      
+        <tr>
+            <th style="width:500px;">
+                @Html.DisplayName("Temat")
+            </th>
+            <th>
+                @Html.DisplayName("Status")
+            </th>           
+            <th>
+                @Html.DisplayName("Kategoria")
+            </th>
+            <th>
+                @Html.DisplayName("Promotor")
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Thesis)
+        {
+            if(User.Identity.IsAuthenticated || (item.Version == "Publiczny" && Model.AcademicYear.Status == "Zgłaszanie prac zakończone"))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lecturer.Lastname)
+                        @Html.DisplayFor(modelItem => item.Lecturer.FirstName)
+                    </td>
+                    <td>
+                        @if (User.Identity.IsAuthenticated && User.Identity.GetUserId() == item.LecturerID)
+                        {
+                            @Html.ActionLink("Edytuj", "Edit", "Thesis", new { id = item.ID }, null) <text> | </text>
+                        }                       
+                        @Html.ActionLink("Szczegóły", "Details", "Thesis", new { id = item.ID }, null) 
+                        @if (User.Identity.IsAuthenticated && User.Identity.GetUserId() == item.LecturerID)
+                        {
+                            <text> | </text> @Html.ActionLink("Usuń", "Delete", "Thesis", new { id = item.ID }, null)
+}                        
+                    </td>
+                </tr>
+            }
+       }
+
+    </table>
+</div>
+Strona @(Model.Thesis.PageCount < Model.Thesis.PageNumber ? 0 : Model.Thesis.PageNumber) z @Model.Thesis.PageCount
+
+@Html.PagedListPager(Model.Thesis, page => Url.Action("Details", new { page}))
+
+<br />
+@if ((Model.AcademicYear.Status == "Zgłaszanie prac otwarte" || ViewBag.UserPermission) && User.Identity.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Dodaj temat", "Create", "Thesis", new { year = Model.AcademicYear.ID }, new { @class = "btn btn-primary" })
+    </p>
+}
+
+@if (User.IsInRole("Rola"))
+{
+    <p>
+        @Html.ActionLink("Dodaj Pracę", "Create", "Thesis", new { year = Model.AcademicYear.ID }, new { @class = "btn btn-primary" })
+    </p>
+    <p>
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.AcademicYear.ID }) |
+    @Html.ActionLink("Powrót", "Index")
+    </p>
+}

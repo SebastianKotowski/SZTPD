@@ -1,0 +1,21 @@
+﻿@model SZPD.Models.Courses
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Usuń</h2>
+
+<h3>Czy na pewno chcesz usunąć kierunek @Model.Name?</h3>
+<div>
+    <hr />
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> |
+            @Html.ActionLink("Powrót", "Details", "Faculties", new { id = Model.FacultyId })
+        </div>
+    }
+</div>

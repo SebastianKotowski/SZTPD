@@ -1,0 +1,77 @@
+﻿body {
+    padding-top: 100px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+#Logo
+{
+    float: left;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left : 30px;
+}
+
+#tableB
+{
+    border-left: none;
+    border-right: none;
+}
+
+#text
+{
+    font-size:12px;
+}
+
+.Left
+{
+    float:left;
+}
+
+.header
+{
+    font-size: 20px;
+    margin-left:250px;
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+.commitment
+{
+    font-size: 10px;
+}
+
+.right
+{
+    float: right;
+    font-size: 10px;
+}
+
+.headerFont
+{
+    font-size: 10px;
+}
+
+.tdWidth
+{
+    width: 230px;    
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+.inputSt input
+select
+textarea {
+    max-width: 280px;
+}

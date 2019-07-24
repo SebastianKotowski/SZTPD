@@ -1,0 +1,63 @@
+﻿@model IEnumerable<SZPD.Models.Thesis>
+@{
+    ViewBag.Title = "ThesisReport";
+}
+
+@{
+    Layout = null;
+}
+
+@Styles.Render("~/Content/myCss")
+
+<h2>Propozycje tematów prac magisterskich 2016/17</h2>
+<h3>@ViewBag.Insttute</h3>
+<table>
+    <thead>
+        
+    </thead>
+    <tbody>
+        @foreach (var m in Model)
+        {            
+        <tr>
+            <td style="text-align:left; background-color:#CDCDCD; fill-opacity:50; height:23px">
+                
+            </td>
+            <td style="background-color:#CDCDCD;">
+            </td>           
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                Temat
+            </td>
+            <td>
+                @m.Subject
+            </td>           
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                Cel pracy
+            </td>
+            <td>
+                @m.Objective
+            </td>            
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                Zadania
+            </td>
+            <td>
+                @m.Tasks
+            </td>           
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                Promotor
+            </td>
+            <td>
+                @m.Lecturer.FirstName @m.Lecturer.Lastname
+            </td>
+        </tr>
+        }
+    </tbody>       
+</table>
+

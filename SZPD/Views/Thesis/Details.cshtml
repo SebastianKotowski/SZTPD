@@ -1,0 +1,103 @@
+﻿@model SZPD.Models.Thesis
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Szczegóły";
+}
+
+<h2>Infoormacje szczegółowe</h2>
+
+<div>
+    <hr />
+    <table class="table table-striped table-bordered table-hover" id="definitionsDataTable">
+        <thead>
+            <tr>
+                <th class="tdWidth">
+
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayName("Temat")
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Subject)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayName("Angielska wersja tematu")
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.EnglishSubject)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayName("Cel")
+                </td>
+                <td>
+                    @Html.DisplayTextFor(model => model.Objective)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayName("Zadania")
+                </td>
+                <td>
+                    @Html.DisplayTextFor(model => model.Tasks)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayName("Komentarz")
+                </td>
+                <td>
+                    @Html.DisplayTextFor(model => model.Comment)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayName("Status")
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Status)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayName("Kategoria")
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Category)
+                </td>
+            </tr>
+                      
+        </tbody>
+    </table>
+
+<p>
+    @if (User.Identity.IsAuthenticated && User.Identity.GetUserId() == Model.LecturerID)
+    {
+        @Html.ActionLink("Edytuj", "Edit", new { id = Model.ID }) <text> | </text>
+    }   
+    @Html.ActionLink("Powrót", "Details", "AcademicYear") |
+    @if (User.Identity.IsAuthenticated && User.Identity.GetUserId() == Model.LecturerID)
+    {
+        @Html.ActionLink("Karta pracy", "ThesisCard", new { id = Model.ID }) <text> | </text>
+}
+    @if (Model.Status != "Zajęta")
+    {
+        @Html.ActionLink("Zgłoś prośbę podjęcia pracy", "SendRequest", new { thesisName = Model.Subject })
+    }
+    else
+    {
+        <p>Praca zajęta, brak mozliwości rezerwacji.</p>
+    } 
+
+</p>

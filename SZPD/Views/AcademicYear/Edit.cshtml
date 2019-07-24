@@ -1,0 +1,131 @@
+﻿@model SZPD.Models.AcademicYear
+
+@{
+    ViewBag.Title = "Edytuj rok akademicki";
+}
+
+<h2>Edycja roku akademickiego</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>@Model.Year</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.Year)
+
+        <div class="form-group">
+            @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Status, new SelectList(new List<string>() { "Nowe", "Zgłaszanie prac otwarte", "Zgłaszanie prac zakończone", "Zamknięte" }), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+
+        <h4 style="color:#2f74a3;">Stacjonarne inzynierskie</h4>
+        <div style="border:solid 2px; border-color: #c4c3c3; border-radius:20px;" >
+            <div class="form-group" style="margin-top:12px; width:100%;">
+                @Html.Label("Limit tematów", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LimitSI, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LimitSI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:100%";>
+                @Html.Label("Termin oddania prac", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SITerm, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SITerm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        
+        <br />
+        <br />
+
+        <h4 style="color:#2f74a3;">Niestacjonarne inżynierskie</h4>
+        <div  style="border:solid 2px; border-color: #c4c3c3; border-radius:20px;">           
+            <div class="form-group"  style="margin-top:12px; width:100%;">
+                @Html.Label("Limit tematów", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LimitNI, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LimitNI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group"  style="width:100%;">
+                @Html.Label("Termin oddania prac", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NITerm, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NITerm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        
+        <br />
+        <br />
+
+        <h4 style="color:#2f74a3;">Stacjonarne magisterskie</h4>
+        <div style="border:solid 2px; border-color: #c4c3c3; border-radius:20px;">           
+            <div class="form-group"  style="margin-top:12px; width:100%;">
+                @Html.Label("Limit tematów", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LimitSM, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LimitSM, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group"  style="width:100%;">
+                @Html.Label("Termin oddania prac", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SMTerm, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SMTerm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+        <h4 style="color:#2f74a3;">Niestacjonarne magisterskie</h4>
+        <div style="border:solid 2px; border-color: #c4c3c3; border-radius:20px;">           
+            <div class="form-group" style="margin-top:12px; width:100%;">
+                @Html.Label("Limit tematów", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LimitNM, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LimitNM, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="width:100%;">
+                @Html.Label("Termin oddania prac", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NMTerm, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NMTerm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        
+        <br />
+        <br />
+
+        
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Zapisz" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Powrót", "Index")
+</div>

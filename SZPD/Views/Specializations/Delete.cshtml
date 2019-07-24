@@ -1,0 +1,21 @@
+﻿@model SZPD.Models.Specialization
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Usuń</h2>
+
+<h3>Czy jestś pewien że chcesz usunąć specjalizację @Model.Name?</h3>
+<div>
+    <hr />   
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Usuń" class="btn btn-default" /> 
+            @Html.ActionLink("Powrót", "Details", "Courses", new { id = Model.CourseId })
+        </div>
+    }
+</div>
